@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0d0b14" />
+<title>Daily — one point a day</title>
+<style>
+  :root {
+    --bg: #0d0b14;
+    --ink: #f4f1ff;
+    --muted: #9c96b4;
+    --line: rgba(255, 255, 255, 0.09);
+    --lime: #c8f56a;
+    --lime-deep: #9fdc3f;
+    --violet: #8b6cff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background:
+      radial-gradient(120% 80% at 15% -10%, rgba(160, 220, 90, 0.18), transparent 60%),
+      radial-gradient(100% 70% at 100% 0%, rgba(139, 108, 255, 0.22), transparent 55%),
+      radial-gradient(90% 60% at 50% 110%, rgba(200, 245, 106, 0.08), transparent 60%),
+      var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+    padding: 28px 18px 40px;
+  }
+
+  .app {
+    width: 100%;
+    max-width: 460px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 4px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .brand-mark {
+    width: 26px;
+    height: 26px;
+    border-radius: 9px;
+    background: linear-gradient(150deg, var(--lime), var(--lime-deep));
+    box-shadow: 0 0 22px rgba(200, 245, 106, 0.35);
+  }
+
+  .rank {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--lime);
+    background: rgba(200, 245, 106, 0.1);
+    border: 1px solid rgba(200, 245, 106, 0.28);
+    padding: 6px 12px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .card {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.015));
+    box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(14px);
+  }
+
+  .score-card {
+    padding: 26px 26px 22px;
+    overflow: hidden;
+  }
+
+  .score-card::after {
+    content: "";
+    position: absolute;
+    inset: auto -30% -60% -30%;
+    height: 220px;
+    background: radial-gradient(closest-side, rgba(200, 245, 106, 0.16), transparent);
+    pointer-events: none;
+  }
+
+  .eyebrow {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .score {
+    margin: 8px 0 0;
+    font-size: clamp(74px, 21vw, 104px);
+    line-height: 0.92;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(170deg, #ffffff 8%, var(--lime) 78%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: transform 140ms ease;
+  }
+
+  .score.bump { animation: bump 380ms cubic-bezier(0.2, 1.6, 0.4, 1); }
+  .multiplier.bump { animation: bump 380ms cubic-bezier(0.2, 1.6, 0.4, 1); }
+
+  @keyframes bump {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.07); }
+    100% { transform: scale(1); }
+  }
+
+  .score-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+
+  .streak {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .multiplier {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lime);
+    background: rgba(200, 245, 106, 0.12);
+    border: 1px solid rgba(200, 245, 106, 0.26);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .checkin {
+    appearance: none;
+    border: 0;
+    width: 100%;
+    min-height: 62px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, var(--lime), var(--lime-deep));
+    color: #10160a;
+    font: inherit;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    box-shadow: 0 14px 34px -12px rgba(200, 245, 106, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition: transform 120ms ease, box-shadow 160ms ease, filter 160ms ease;
+  }
+
+  .checkin:hover { filter: brightness(1.04); }
+  .checkin:active { transform: scale(0.985); }
+  .checkin:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+
+  .checkin.is-done {
+    background: rgba(255, 255, 255, 0.07);
+    color: var(--lime);
+    border: 1px solid rgba(200, 245, 106, 0.3);
+    box-shadow: none;
+  }
+
+  .message {
+    margin: -4px 6px 0;
+    min-height: 38px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .tier-card { padding: 18px 20px 20px; }
+
+  .tier-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .tier-label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .tier-text {
+    font-size: 12.5px;
+    color: var(--ink);
+    text-align: right;
+  }
+
+  .tier-track {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+  }
+
+  .tier-fill {
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--violet), var(--lime));
+    transition: width 420ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  }
+
+  .days-card { padding: 18px 16px 16px; }
+
+  .days {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    gap: 2px;
+    margin-top: 14px;
+  }
+
+  .day {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .day-letter {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .day-dot {
+    width: 100%;
+    max-width: 26px;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    color: var(--muted);
+    font-size: 9.5px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .day-dot.is-filled {
+    background: linear-gradient(160deg, rgba(200, 245, 106, 0.95), rgba(159, 220, 63, 0.75));
+    border-color: transparent;
+    color: #10160a;
+    font-weight: 700;
+  }
+
+  .day-dot.is-filled:not(.is-scoring) {
+    background: rgba(255, 255, 255, 0.16);
+    color: var(--ink);
+    font-weight: 400;
+  }
+
+  .day-dot.is-today {
+    border-color: rgba(200, 245, 106, 0.6);
+    box-shadow: 0 0 0 3px rgba(200, 245, 106, 0.1);
+    color: var(--ink);
+  }
+
+  .sync-card { padding: 0; }
+
+  .sync-card summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 20px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .sync-card summary::-webkit-details-marker { display: none; }
+
+  .sync-card summary::after {
+    content: "+";
+    margin-left: auto;
+    color: var(--lime);
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .sync-card details[open] summary::after { content: "–"; }
+
+  .sync-tag {
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--lime);
+    background: rgba(200, 245, 106, 0.1);
+    border: 1px solid rgba(200, 245, 106, 0.24);
+    border-radius: 999px;
+    padding: 3px 9px;
+  }
+
+  .sync-body {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .sync-note, .sync-label {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .code {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.32);
+    color: #d9d4ea;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    padding: 11px 12px;
+    resize: vertical;
+    word-break: break-all;
+  }
+
+  .code:focus-visible { outline: 2px solid rgba(200, 245, 106, 0.6); outline-offset: 1px; }
+
+  .ghost-btn {
+    appearance: none;
+    font: inherit;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.13);
+    border-radius: 14px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: background 140ms ease;
+  }
+
+  .ghost-btn:hover { background: rgba(255, 255, 255, 0.11); }
+  .ghost-btn:active { transform: scale(0.99); }
+  .ghost-btn:focus-visible { outline: 2px solid rgba(200, 245, 106, 0.6); outline-offset: 2px; }
+
+  .divider { height: 1px; background: var(--line); margin: 4px 0; }
+
+  .sync-status {
+    margin: 0;
+    min-height: 16px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--lime);
+  }
+
+  .sync-status.is-error { color: #ff9a9a; }
+
+  .hint {
+    margin: 0 8px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(156, 150, 180, 0.75);
+    text-align: center;
+  }
+
+  @media (max-width: 380px) {
+    .day-dot { font-size: 8.5px; }
+    .score-card { padding: 22px 20px 18px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="app">
+    <div class="topbar">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"></span>Daily</div>
+      <div class="rank" id="rank">Newcomer</div>
+    </div>
+
+    <section class="card score-card" aria-label="Your score">
+      <p class="eyebrow">Social score</p>
+      <div class="score" id="score">0</div>
+      <div class="score-meta">
+        <span class="streak" id="streak">No streak yet</span>
+        <span class="multiplier" id="multiplier">×1</span>
+      </div>
+    </section>
+
+    <button class="checkin" id="checkin" type="button">Check in</button>
+    <p class="message" id="message" role="status" aria-live="polite"></p>
+
+    <section class="card tier-card" aria-label="Multiplier progress">
+      <div class="tier-row">
+        <span class="tier-label">Bonus</span>
+        <span class="tier-text" id="tier-text">2 more days to ×1.5</span>
+      </div>
+      <div class="tier-track">
+        <div class="tier-fill" id="tier-fill"></div>
+      </div>
+    </section>
+
+    <section class="card days-card" aria-label="Last 14 days">
+      <p class="eyebrow">Last 14 days</p>
+      <div class="days" id="days"></div>
+    </section>
+
+    <section class="card sync-card" aria-label="Sync across devices">
+      <details id="sync">
+        <summary>Keep it across devices <span class="sync-tag">Sync code</span></summary>
+        <div class="sync-body">
+          <p class="sync-note">A sync code carries your score and streak to another phone or laptop. Codes merge, so you can move back and forth without losing points.</p>
+          <button class="ghost-btn" id="make-code" type="button">Create a sync code</button>
+          <textarea class="code" id="code-out" rows="3" readonly placeholder="Your code appears here" aria-label="Your sync code"></textarea>
+          <button class="ghost-btn" id="copy-code" type="button">Copy code</button>
+          <div class="divider"></div>
+          <label class="sync-label" for="code-in">Have a code from another device? Paste it here.</label>
+          <textarea class="code" id="code-in" rows="3" placeholder="Paste a sync code" aria-label="Paste a sync code"></textarea>
+          <button class="ghost-btn" id="restore" type="button">Restore from code</button>
+          <p class="sync-status" id="sync-status" role="status" aria-live="polite"></p>
+        </div>
+      </details>
+    </section>
+
+    <p class="hint">One check-in a day earns a point. Check in again the same day and nothing changes. Miss a day and the streak starts over, but your score stays put.</p>
+  </main>
+
+  <script src="scoring.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
