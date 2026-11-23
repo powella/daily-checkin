@@ -14,7 +14,7 @@ database name, user and password. Everything lives in `db/schema.sql`.
 
 ColdFusion Administrator → **Data & Services → Data Sources → Add New**:
 
-- Name: `dailybeacon` (must match `variables.dsn` at the top of `api/lib.cfc`)
+- Name: `dailyCheck` (must match `variables.dsn` at the top of `api/lib.cfc`)
 - Driver: MySQL / MariaDB
 - Server: `localhost` (or the host Hostek gave you), port `3306`
 - Database, user, password: from step 1

@@ -7,7 +7,7 @@
   if (!wantsRun) {
     text = "Daily beacon setup" & chr(10) & chr(10)
       & "Add ?run=1 to this URL to create the tables in the database behind the" & chr(10)
-      & "datasource named in api/lib.cfc (default: dailybeacon)." & chr(10) & chr(10)
+      & "datasource named in api/lib.cfc (default: dailyCheck)." & chr(10) & chr(10)
       & "Then open api/ping.cfm to confirm all three tables are there." & chr(10)
       & "Delete api/install.cfm once setup has succeeded." & chr(10);
   } else {

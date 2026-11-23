@@ -45,7 +45,7 @@ tap tally stay on the device.
 ## Deploying
 
 See [DEPLOY.md](DEPLOY.md). In short: create a MariaDB database, add a
-ColdFusion datasource named `dailybeacon`, upload the files, open
+ColdFusion datasource named `dailyCheck`, upload the files, open
 `api/install.cfm?run=1` once, check `api/ping.cfm`, then delete the installer.
 
 The shared board is casual rather than tamper-proof: there is no sign-in, so a

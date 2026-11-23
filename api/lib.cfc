@@ -8,7 +8,7 @@ component output="false" {
   // the database that holds db/schema.sql. That is the only setting here you
   // should need to change.
   // ---------------------------------------------------------------------------
-  variables.dsn = "dailybeacon";
+  variables.dsn = "dailyCheck";
 
   // ---------------------------------------------------------------------------
   // Beacon rules

@@ -5,6 +5,10 @@ component output="false" {
   this.clientManagement = false;
   this.setClientCookies = false;
 
+  // Adobe's serializeJSON uppercases struct keys by default. The page reads
+  // them as ok, error, you, circles, countries and so on, so keep their case.
+  this.serialization.preserveCaseForStructKey = true;
+
   // ---------------------------------------------------------------------------
   // Anything that escapes a try/catch lands here, so the API never answers with
   // ColdFusion's built-in error page: that page prints the template path and a
