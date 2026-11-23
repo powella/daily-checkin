@@ -18,4 +18,5 @@
   }
 </cfscript>
 <cfheader name="Cache-Control" value="no-store" />
-<cfcontent type="text/plain; charset=utf-8" variable="#text#" />
+<cfcontent type="text/plain; charset=utf-8" reset="false" />
+<cfoutput>#text#</cfoutput>
