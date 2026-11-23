@@ -144,6 +144,19 @@
     flex-wrap: wrap;
   }
 
+  .clicks {
+    margin: 12px 0 0;
+    font-size: 11.5px;
+    line-height: 1.4;
+    color: rgba(156, 150, 180, 0.7);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .clicks strong {
+    font-weight: 600;
+    color: rgba(156, 150, 180, 0.95);
+  }
+
   .streak {
     font-size: 13px;
     color: var(--muted);
@@ -290,6 +303,291 @@
     color: var(--ink);
   }
 
+  .net-status {
+    margin: -6px 8px 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #d8c98a;
+    text-align: center;
+  }
+
+  .beacon-card { padding: 18px 20px 16px; }
+
+  .beacon-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .beacon-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .beacon-lamp {
+    --lamp: 255, 107, 107;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgb(var(--lamp));
+    animation: lamp-pulse 3.4s ease-in-out infinite;
+    transition: background 400ms ease;
+  }
+
+  .beacon-lamp.is-on {
+    --lamp: 200, 245, 106;
+    animation-duration: 2.4s;
+  }
+
+  @keyframes lamp-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(var(--lamp), 0.45), 0 0 9px rgba(var(--lamp), 0.5); }
+    50% { box-shadow: 0 0 0 6px rgba(var(--lamp), 0), 0 0 16px rgba(var(--lamp), 0.72); }
+  }
+
+  .ripples {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .ripple {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    margin: -10px 0 0 -10px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(200, 245, 106, 0.7);
+    box-shadow: 0 0 16px rgba(200, 245, 106, 0.18), inset 0 0 12px rgba(200, 245, 106, 0.12);
+    opacity: 0;
+    transform: scale(0.35);
+    animation: ripple-out 950ms cubic-bezier(0.16, 0.62, 0.25, 1) forwards;
+  }
+
+  .ripple-alt {
+    border-color: rgba(139, 108, 255, 0.55);
+    box-shadow: 0 0 18px rgba(139, 108, 255, 0.18), inset 0 0 12px rgba(139, 108, 255, 0.12);
+  }
+
+  @keyframes ripple-out {
+    0% { opacity: 0; transform: scale(0.35); }
+    12% { opacity: 0.85; }
+    100% { opacity: 0; transform: scale(11); }
+  }
+
+  .beacon-name {
+    margin: 6px 0 0;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  .beacon-name.is-set { color: var(--lime); }
+
+  .beacon-score {
+    flex: none;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lime);
+    background: rgba(200, 245, 106, 0.1);
+    border: 1px solid rgba(200, 245, 106, 0.24);
+    border-radius: 999px;
+    padding: 5px 11px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .beacon-meta {
+    margin: 10px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .beacon-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .beacon-input {
+    flex: 1;
+    min-width: 0;
+    font: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.32);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 11px 12px;
+  }
+
+  .beacon-input::placeholder { color: rgba(156, 150, 180, 0.6); }
+  .beacon-input:focus-visible { outline: 2px solid rgba(200, 245, 106, 0.6); outline-offset: 1px; }
+
+  .beacon-submit {
+    flex: none;
+    padding: 11px 18px;
+    border-radius: 12px;
+    border: 0;
+    color: #10160a;
+    background: linear-gradient(180deg, var(--lime), var(--lime-deep));
+  }
+
+  .beacon-submit:hover {
+    background: linear-gradient(180deg, var(--lime), var(--lime-deep));
+    filter: brightness(1.05);
+  }
+
+  .link-btn {
+    appearance: none;
+    font: inherit;
+    font-size: 12px;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    padding: 10px 0 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .link-btn:hover { color: var(--ink); }
+  .link-btn:focus-visible { outline: 2px solid rgba(200, 245, 106, 0.6); outline-offset: 2px; }
+
+  .beacon-error {
+    margin: 8px 0 0;
+    min-height: 15px;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #ff9a9a;
+  }
+
+  .boards-card { padding: 18px 20px 14px; }
+
+  .boards-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .boards-note { font-size: 11px; color: var(--muted); }
+
+  .boards-tabs {
+    display: flex;
+    gap: 6px;
+    margin: 12px 0 2px;
+  }
+
+  .board-tab {
+    appearance: none;
+    font: inherit;
+    font-size: 12px;
+    padding: 7px 11px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--muted);
+    cursor: pointer;
+  }
+
+  .board-tab.is-active {
+    color: #10160a;
+    background: linear-gradient(180deg, var(--lime), var(--lime-deep));
+    border-color: transparent;
+    font-weight: 700;
+  }
+
+  .board-tab:focus-visible { outline: 2px solid rgba(200, 245, 106, 0.6); outline-offset: 2px; }
+
+  .board-list {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+  }
+
+  .board-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding: 9px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .board-row:first-child { border-top: 0; }
+
+  .board-rank {
+    flex: none;
+    width: 18px;
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .board-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 14px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .board-row.is-mine .board-name { color: var(--lime); }
+
+  .board-people {
+    flex: none;
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .board-points {
+    flex: none;
+    min-width: 34px;
+    text-align: right;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--lime);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .board-empty {
+    margin: 10px 0 4px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .board-you {
+    margin: 8px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .name-form {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .board-error {
+    margin: 6px 0 0;
+    min-height: 14px;
+    font-size: 12px;
+    line-height: 1.4;
+    color: #ff9a9a;
+  }
+
   .sync-card { padding: 0; }
 
   .sync-card summary {
@@ -418,10 +716,63 @@
         <span class="streak" id="streak">No streak yet</span>
         <span class="multiplier" id="multiplier">×1</span>
       </div>
+      <p class="clicks"><strong id="clicks-count">0 clicks total</strong></p>
     </section>
 
     <button class="checkin" id="checkin" type="button">Check in</button>
     <p class="message" id="message" role="status" aria-live="polite"></p>
+    <p class="net-status" id="net-status" role="status" aria-live="polite" hidden></p>
+
+    <section class="card beacon-card" aria-label="Your beacon">
+      <div class="beacon-head">
+        <div>
+          <p class="eyebrow beacon-eyebrow"><span class="beacon-lamp" id="beacon-lamp" aria-hidden="true"></span>Beacon</p>
+          <p class="beacon-name" id="beacon-name">No beacon yet</p>
+        </div>
+        <span class="beacon-score" id="beacon-score" hidden>0 points</span>
+      </div>
+      <p class="beacon-meta" id="beacon-meta">Pick a word or a name your circle shares. Every check-in adds a point to it, so everyone on the same beacon pools their points.</p>
+      <form class="beacon-form" id="beacon-form" novalidate>
+        <input class="beacon-input" id="beacon-input" type="text" maxlength="24" placeholder="red · chocolate · Captain Kirk" aria-label="Beacon name" autocomplete="off" autocapitalize="words" spellcheck="false" />
+        <button class="ghost-btn beacon-submit" id="beacon-set" type="submit">Set</button>
+      </form>
+      <button class="link-btn" id="beacon-drop" type="button" hidden>Drop this beacon</button>
+      <p class="beacon-error" id="beacon-error" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="card boards-card" id="boards-card" aria-label="Leaderboards" hidden>
+      <div class="boards-head">
+        <p class="eyebrow">Boards</p>
+        <span class="boards-note">check-ins</span>
+      </div>
+
+      <div class="boards-tabs" role="tablist" aria-label="Choose a board">
+        <button class="board-tab" id="tab-individual" type="button" role="tab" aria-selected="false" aria-controls="board-individual">Individuals</button>
+        <button class="board-tab is-active" id="tab-circles" type="button" role="tab" aria-selected="true" aria-controls="board-circles">Circles</button>
+        <button class="board-tab" id="tab-countries" type="button" role="tab" aria-selected="false" aria-controls="board-countries">Countries</button>
+      </div>
+
+      <div class="board-panel" id="board-individual" role="tabpanel" hidden>
+        <form class="name-form" id="name-form" novalidate>
+          <input class="beacon-input" id="name-input" type="text" maxlength="24" placeholder="Your name on the board" aria-label="Your name on the board" autocomplete="off" autocapitalize="words" spellcheck="false" />
+          <button class="ghost-btn" id="name-save" type="submit">Save</button>
+        </form>
+        <p class="board-error" id="name-error" role="status" aria-live="polite"></p>
+        <p class="board-you" id="board-you"></p>
+        <ol class="board-list" id="board-individual-list"></ol>
+        <p class="board-empty" id="board-individual-empty" hidden>No named players yet. Add your name above to appear here.</p>
+      </div>
+
+      <div class="board-panel" id="board-circles" role="tabpanel">
+        <ol class="board-list" id="board-circles-list"></ol>
+        <p class="board-empty" id="board-circles-empty" hidden>No circles yet. Set a beacon and check in to start one.</p>
+      </div>
+
+      <div class="board-panel" id="board-countries" role="tabpanel" hidden>
+        <ol class="board-list" id="board-countries-list"></ol>
+        <p class="board-empty" id="board-countries-empty" hidden>No country yet — the host is not reporting one. See DEPLOY.md.</p>
+      </div>
+    </section>
 
     <section class="card tier-card" aria-label="Multiplier progress">
       <div class="tier-row">
@@ -442,7 +793,7 @@
       <details id="sync">
         <summary>Keep it across devices <span class="sync-tag">Sync code</span></summary>
         <div class="sync-body">
-          <p class="sync-note">A sync code carries your score and streak to another phone or laptop. Codes merge, so you can move back and forth without losing points.</p>
+          <p class="sync-note">A sync code carries your score, streak, beacon and player key to another phone or laptop, so both devices talk to the shared board as you. Codes merge, so you can move back and forth without losing points.</p>
           <button class="ghost-btn" id="make-code" type="button">Create a sync code</button>
           <textarea class="code" id="code-out" rows="3" readonly placeholder="Your code appears here" aria-label="Your sync code"></textarea>
           <button class="ghost-btn" id="copy-code" type="button">Copy code</button>
@@ -457,6 +808,8 @@
 
     <p class="hint">One check-in a day earns a point. Check in again the same day and nothing changes. Miss a day and the streak starts over, but your score stays put.</p>
   </main>
+
+  <div class="ripples" id="ripples" aria-hidden="true"></div>
 
   <script src="scoring.js"></script>
   <script src="app.js"></script>
