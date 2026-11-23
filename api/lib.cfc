@@ -132,7 +132,7 @@ component output="false" {
       var country = requestCountry();
       var wantsCheckin = field(body, "checkin") == true;
 
-      if (wantsCheckin && len(dayKey) && listFind(clock.allowed, dayKey)) {
+      if (wantsCheckin && len(dayKey) && arrayFind(clock.allowed, dayKey) > 0) {
         var beaconId = scalar("SELECT beacon_id FROM players WHERE id = ?", [ strParam(playerId) ]);
         var already = scalar("SELECT COUNT(*) FROM checkins WHERE player_id = ? AND day = ?", [ strParam(playerId), strParam(dayKey) ]);
 
@@ -187,9 +187,13 @@ component output="false" {
       return { status: 200, body: payload };
 
     } catch (any e) {
-      cflog(file = "dailybeacon", type = "error", text = "sync: " & e.message);
-      var hint = "The server could not reach its database.";
       var detail = structKeyExists(e, "detail") ? e.detail : "";
+      cflog(
+        file = "dailybeacon",
+        type = "error",
+        text = "sync: " & e.message & (len(detail) ? " | " & detail : "")
+      );
+      var hint = "The server could not reach its database.";
       if (findNoCase("doesn't exist", e.message) || findNoCase("doesn't exist", detail)) {
         hint = "The database tables are missing. Open api/install.cfm?run=1 once, then reload.";
       }
